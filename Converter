@@ -1,0 +1,86 @@
+using System;
+
+namespace ConsoleApp3
+{
+    public class Converter
+    {
+        private double usd;
+        private double eur;
+        private double pln;
+
+        public Converter(double usd, double eur, double pln)
+        {
+            this.usd = usd;
+            this.eur = eur;
+            this.pln = pln;
+        }
+
+        public double ConvertToCurrency(double amountInUah, double currencyRate)
+        {
+            return amountInUah / currencyRate;
+        }
+
+        public double ConvertFromCurrency(double amountInCurrency, double currencyRate)
+        {
+            return amountInCurrency * currencyRate;
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Converter converter = new Converter(26.5, 30.0, 6.0);
+
+            Console.WriteLine("Оберіть операцію:");
+            Console.WriteLine("1. З гривні в USD");
+            Console.WriteLine("2. З гривні в EUR");
+            Console.WriteLine("3. З гривні в PLN");
+            Console.WriteLine("4. З USD/EUR/PLN в гривню");
+            Console.Write("Ваш вибір: ");
+            int choice = int.Parse(Console.ReadLine());
+
+            Console.Write("Введіть суму: ");
+            double amount = double.Parse(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    Console.WriteLine($"Результат: {amount} грн = {converter.ConvertToCurrency(amount, converter.usd)} USD");
+                    break;
+                case 2:
+                    Console.WriteLine($"Результат: {amount} грн = {converter.ConvertToCurrency(amount, converter.eur)} EUR");
+                    break;
+                case 3:
+                    Console.WriteLine($"Результат: {amount} грн = {converter.ConvertToCurrency(amount, converter.pln)} PLN");
+                    break;
+                case 4:
+                    Console.WriteLine("Введіть код валюти (USD, EUR, PLN): ");
+                    string currencyCode = Console.ReadLine().ToUpper();
+                    double result = 0;
+
+                    switch (currencyCode)
+                    {
+                        case "USD":
+                            result = converter.ConvertFromCurrency(amount, converter.usd);
+                            break;
+                        case "EUR":
+                            result = converter.ConvertFromCurrency(amount, converter.eur);
+                            break;
+                        case "PLN":
+                            result = converter.ConvertFromCurrency(amount, converter.pln);
+                            break;
+                        default:
+                            Console.WriteLine("Невірний код валюти.");
+                            break;
+                    }
+
+                    Console.WriteLine($"Результат: {amount} {currencyCode} = {result} грн");
+                    break;
+                default:
+                    Console.WriteLine("Невірний вибір операції.");
+                    break;
+            }
+        }
+    }
+}
