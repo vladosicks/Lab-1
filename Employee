@@ -1,0 +1,75 @@
+namespace ConsoleApp3
+{
+    public class Employee
+    {
+        private string lastName;
+        private string firstName;
+        private string position;
+        private int experience;
+
+        public Employee(string lastName, string firstName)
+        {
+            this.lastName = lastName;
+            this.firstName = firstName;
+        }
+
+        public void SetPosition(string position)
+        {
+            this.position = position;
+        }
+
+        public void SetExperience(int experience)
+        {
+            this.experience = experience;
+        }
+
+        public double CalculateSalary()
+        {
+
+            double baseSalary = 500;
+            double salary = baseSalary + (experience * 100);
+            return salary;
+        }
+
+        public double CalculateTax()
+        {
+            double salary = CalculateSalary();
+            double taxRate = 0.15; 
+            double tax = salary * taxRate;
+            return tax;
+        }
+
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"Прізвище: {lastName}");
+            Console.WriteLine($"Ім'я: {firstName}");
+            Console.WriteLine($"Посада: {position}");
+            Console.WriteLine($"Оклад: {CalculateSalary()} грн");
+            Console.WriteLine($"Податковий збір: {CalculateTax()} грн");
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write("Введіть прізвище співробітника: ");
+            string lastName = Console.ReadLine();
+            Console.Write("Введіть ім'я співробітника: ");
+            string firstName = Console.ReadLine();
+
+            Employee employee = new Employee(lastName, firstName);
+
+            Console.Write("Введіть посаду співробітника: ");
+            string position = Console.ReadLine();
+            employee.SetPosition(position);
+
+            Console.Write("Введіть стаж співробітника (у роках): ");
+            int experience = int.Parse(Console.ReadLine());
+            employee.SetExperience(experience);
+
+            Console.WriteLine("\nІнформація про співробітника:");
+            employee.DisplayInfo();
+        }
+    }
+}
